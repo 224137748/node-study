@@ -4,7 +4,7 @@ const { promisify } = require("util");
 const readFile = promisify(fs.readFile);
 
 const server = http.createServer((req, res) => {
-  const { url, method } = req;
+  const { url, method, headers } = req;
   if (url === "/" && method === "GET") {
     readFile("./index.html")
       .then((data) => {
@@ -18,6 +18,11 @@ const server = http.createServer((req, res) => {
         });
         res.end("500, 服务器错误");
       });
+  } else if (url === "/users" && method === "GET") {
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify([{ name: "tom", age: 20 }]));
+  } else if (headers.accept.indexOf("image/*") !== -1) {
+    fs.createReadStream("." + url).pipe(res);
   } else {
     res.statusCode = 404;
     res.setHeader("Content-Type", "text/plain;charset=utf-8");
