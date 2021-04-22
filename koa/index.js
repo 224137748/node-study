@@ -32,7 +32,7 @@ router.post('/index', async ctx => {
   ctx.body = 'post page';
 });
 
-app.use(router.routes())
+
 
 
 
@@ -82,7 +82,9 @@ app.use(async (ctx, next) => {
   console.log('text2 sync end')
 })
 
-console.log(app.middlewares)
+// console.log(app.middlewares)
+// 此版本router 后面的中间件不会执行，所以放到最后面注册
+app.use(router.routes())
 
 
 app.listen(3000, () => {
