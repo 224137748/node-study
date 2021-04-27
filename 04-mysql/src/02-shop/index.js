@@ -64,10 +64,25 @@ router.post("/admin/product", async (ctx, next) => {
   };
 });
 
-// router.delete('/admin/product/:id', async (ctx, next) => {
+router.delete('/admin/product/:id', async (ctx, next) => {
+  const id = ctx.params.id;
+  const res = await Produt.destroy({
+    where: {
+      id
+    }
+  });
+  ctx.body = { success: true };
+});
 
-// })
+router.get('/cart', async (ctx, next) => {
+  const cart = await ctx.user.getCart();
+  const products = await cart.getProducts();
+  ctx.body = {
+    products
+  };
+});
 
+router.post('/cart',);
 app.use(router.routes());
 
 sequelize.sync().then(async () => {
