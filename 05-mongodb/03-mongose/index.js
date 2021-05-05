@@ -68,17 +68,49 @@ conn.once("open", async () => {
 
     // 定义多个索引
     blogSchema.index({ title: 1, author: 1, date: -1 });
-    const BlogModel = mongoose.model("blog", blogSchema);
-    const blog = new BlogModel({
-      title: "nodejs 持久化",
-      author: "jerry",
-      body: ".....",
+
+    // 定义实例方法，抽象出常用方法便于复用
+    // blogSchema.methods.findByAuthor = function () {
+    //   return this.model('blog').find({ author: this.author }).exec();
+    // };
+
+    // const BlogModel = mongoose.model("blog", blogSchema);
+    // const blog = new BlogModel({
+    //   title: "nodejs 持久化22",
+    //   author: "jerry222",
+    //   body: ".....222",
+    // });
+
+    // const r = await blog.save();
+    // console.log("新增blog", r);
+
+    // const auth = await blog.findByAuthor();
+    // console.log('findByAuthor', auth);
+
+    // ================================================================
+
+
+    // 静态方法
+    // 实例方法还需要定义实例，用起来比较繁琐，可以使用静态方法
+    blogSchema.statics.findByAuthor = function (author) {
+      return this.model('blog').find({ author }).exec();
+    };
+
+    // 虚拟属性
+    blogSchema.virtual('commentsCount').get(function () {
+      return this.comments.length;
     });
+    const BlogModel = mongoose.model("blog", blogSchema);
 
-    const r = await blog.save();
-    console.log("新增blog", r);
+    // const staticAuth = await BlogModel.findByAuthor('jerry22');
+    // console.log('静态方法查找', staticAuth);
 
-    // 定义多个索引
+    // 使用虚拟属性
+    const blog = await BlogModel.findOne({ author: 'jerry' });
+    console.log('blog留言数： ', blog.commentsCount);
+
+
+
   } catch (error) {
     console.log(error);
   }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/socket.io/3.1.1/socket.io.min.js"></script>
+</head>
+
+<body>
+
+  <div class="app">
+    <ul id="messages"> </ul>
+    <form action="">
+      <input id="m" autocomplete="off" type="text">
+      <button>发送</button>
+    </form>
+
+  </div>
+</body>
+<script>
+  $(function () {
+    var socket = io()
+
+    $('form').submit(function (e) {
+      e.preventDefault();
+
+      socket.emit('chat message', $('#m').val())
+
+      $('#m').val('')
+
+      return false
+    })
+
+    socket.on('chat message', function (message) {
+      $('#messages').append($('<li>').text(message))
+    })
+  })
+</script>
+
+</html>
