@@ -66,7 +66,6 @@ router.post('/users/login', async ctx => {
   client.set(sessionId, JSON.stringify(body));
   console.log('res  ===> ', sessionId);
   ctx.session.sessionId = sessionId;
-  ctx.session.username = body.username;
   ctx.body = {
     message: '登录成功'
   };
