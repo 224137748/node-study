@@ -18,11 +18,14 @@
   },
   "homepage": "https://github.com/224137748/node-study#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "co-redis": "^2.1.1",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.1",
     "koa-redis": "^4.0.1",
     "koa-router": "^10.0.0",
     "koa-session": "^6.2.0",
@@ -30,6 +33,7 @@
     "koa2-cors": "^2.0.6",
     "mongo": "^0.1.0",
     "mongoose": "^5.12.7",
+    "querystring": "^0.2.1",
     "redis": "^3.1.2",
     "socket.io": "^4.0.1"
   }
