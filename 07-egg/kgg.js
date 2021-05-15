@@ -1,14 +1,18 @@
 const Koa = require('koa');
-const { initRouter, initController } = require('./kkb-loader');
+const { initRouter, initController, initServer, loadConfig, initSchedule } = require('./kkb-loader');
 
 
 
 class Kgg {
   constructor() {
-    this.$app = new Koa();
-    this.$ctrl = initController();
-    this.$router = initRouter(this);
+    // 挂载sequelize
 
+    this.$app = new Koa();
+    loadConfig(this);
+    initSchedule();
+    this.$server = initServer();
+    this.$ctrl = initController(this);
+    this.$router = initRouter(this);
     this.$app.use(this.$router.routes());
   }
 
